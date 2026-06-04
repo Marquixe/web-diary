@@ -1,0 +1,23 @@
+{
+  "name": "web-diary",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter './apps/*' dev",
+    "build": "pnpm --filter '@life-os/shared' build && pnpm --parallel --filter './apps/*' build",
+    "lint": "pnpm --recursive lint",
+    "format": "pnpm --recursive format"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
