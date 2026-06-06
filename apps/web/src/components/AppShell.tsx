@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/store/authStore'
 import type { ReactNode } from 'react'
 
 const navItems = [
@@ -8,6 +9,7 @@ const navItems = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation()
+  const logout = useAuthStore((s) => s.logout)
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
@@ -22,9 +24,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 to={item.to}
                 className={cn(
                   'flex flex-col items-center gap-0.5 py-2 text-xs',
-                  pathname.startsWith(item.to)
-                    ? 'text-foreground'
-                    : 'text-muted-foreground'
+                  pathname.startsWith(item.to) ? 'text-foreground' : 'text-muted-foreground'
                 )}
               >
                 <span className="text-xl">{item.icon}</span>
@@ -32,6 +32,15 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Link>
             </li>
           ))}
+          <li className="flex-1">
+            <button
+              onClick={() => logout()}
+              className="flex flex-col items-center gap-0.5 py-2 text-xs text-muted-foreground w-full"
+            >
+              <span className="text-xl">🚪</span>
+              Logout
+            </button>
+          </li>
         </ul>
       </nav>
 
@@ -52,6 +61,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             {item.icon}
           </Link>
         ))}
+        <div className="flex-1" />
+        <button
+          onClick={() => logout()}
+          title="Logout"
+          className="text-xl p-2 rounded-lg text-muted-foreground hover:text-foreground"
+        >
+          🚪
+        </button>
       </nav>
     </div>
   )
